@@ -1,5 +1,6 @@
 import { Form, Input, Button, Typography, Divider, Flex } from 'antd'
 import { emailOrPhoneRule, emailRule, phoneRule } from '../rules'
+import { login } from '../services/AuthService'
 
 const { Title } = Typography
 
@@ -22,7 +23,12 @@ const AuthPage = () => {
     delete formattedValues.login
   }
 
-  console.log('Login :', formattedValues)
+  login(formattedValues).then(response => {
+    console.log('Login successful:', response)
+  }).catch(error => {
+    console.error('Login failed:', error)
+  })
+
 }
 
 
