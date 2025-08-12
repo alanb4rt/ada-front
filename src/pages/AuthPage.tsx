@@ -9,8 +9,22 @@ const AuthPage = () => {
   }
 
   const onFinishLogin = (values: any) => {
-    console.log('Login :', values)
+  const formattedValues = { ...values }
+
+  if (values.login) {
+    if (values.login.includes('@')) {
+      formattedValues.mail = values.login
+      delete formattedValues.phone
+    } else {
+      formattedValues.phone = values.login
+      delete formattedValues.email
+    }
+    delete formattedValues.login
   }
+
+  console.log('Login :', formattedValues)
+}
+
 
   return (
     <Flex
