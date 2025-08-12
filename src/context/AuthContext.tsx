@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { LOGIN_URL } from "../url";
+import { LOGIN_URL } from "../utils/urls";
 
 interface AuthContextType {
   token: string | null;
@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<any | null>(null);
 
-  const login = async <T = any>(data: T): Promise<void> => {
+  const login = async <T = any,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
@@ -35,7 +35,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!token;
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ token, user, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
