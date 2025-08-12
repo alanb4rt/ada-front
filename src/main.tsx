@@ -20,6 +20,8 @@ createRoot(document.getElementById("root")!).render(
           },
           Layout: {
             bodyBg: "#242424",
+            siderBg: "#1E1D1F",
+            headerBg: "#1E1D1F",
           },
         },
       }}
