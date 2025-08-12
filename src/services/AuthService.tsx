@@ -18,8 +18,4 @@ const login = async <T = any>(
   return response.data;
 };
 
-
-
-
-
 export {login}

@@ -1,12 +1,18 @@
 import { Form, Input, Button, Typography, Divider, Flex } from 'antd'
 import { emailOrPhoneRule, emailRule, phoneRule } from '../rules'
-import { login } from '../services/AuthService'
+import { useAuth } from '../context/AuthContext'
 
 const { Title } = Typography
 
 const AuthPage = () => {
+  const { login } = useAuth()
   const onFinishSignup = (values: any) => {
     console.log('Sign Up :', values)
+    login(values).then(response => {
+    console.log('Login successful:', response)
+  }).catch(error => {
+    console.error('Login failed:', error)
+  })
   }
 
   const onFinishLogin = (values: any) => {
@@ -30,7 +36,6 @@ const AuthPage = () => {
   })
 
 }
-
 
   return (
     <Flex
