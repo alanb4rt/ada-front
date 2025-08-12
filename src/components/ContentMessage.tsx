@@ -1,7 +1,5 @@
-import { Flex, Input, Typography } from "antd";
+import { Flex, Input } from "antd";
 import MessageCard from "./messageCard";
-
-const { Title } = Typography;
 
 const inputStyle: React.CSSProperties = {
   borderRadius: 8,
@@ -21,16 +19,17 @@ const sectionMessageStyle: React.CSSProperties = {
 export default function ContentMessage() {
   return (
     <>
-      <Title level={2}>Content</Title>
       <Flex style={sectionMessageStyle} gap={8}>
         <MessageCard content="hello" />
         <MessageCard content="Hello there" messageOut />
       </Flex>
-      <Input
-        placeholder="Enter your message"
-        variant="filled"
-        style={inputStyle}
-      />
+      <Flex style={{ padding: 16 }}>
+        <Input
+          placeholder="Enter your message"
+          variant="filled"
+          style={inputStyle}
+        />
+      </Flex>
     </>
   );
 }
