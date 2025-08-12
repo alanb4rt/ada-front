@@ -4,7 +4,7 @@ import "./index.css";
 import Router from "./routes.tsx";
 import { ConfigProvider } from "antd";
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider
       theme={{
@@ -22,4 +22,4 @@ createRoot(document.getElementById("root")!).render(
       <Router />
     </ConfigProvider>
   </StrictMode>
-);
+)

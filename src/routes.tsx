@@ -1,18 +1,18 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
-import App from "./App";
-import Dashboard from "./pages/Dashboard";
+import { createBrowserRouter, RouterProvider } from 'react-router'
+import App from './App'
+import AuthPage from './pages/AuthPage'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
+    path: '/auth',
+    element: <AuthPage />,
   },
-]);
+])
 
 export default function Router() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }

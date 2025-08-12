@@ -1,5 +1,5 @@
-import { DatePicker } from "antd";
+import { DatePicker } from 'antd'
 
 export default function App() {
-  return <DatePicker />;
+  return <DatePicker />
 }
