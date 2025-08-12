@@ -5,7 +5,9 @@ import ContentMessage from "./components/ContentMessage";
 const { Content, Sider } = Layout;
 
 const contentStyle: React.CSSProperties = {
-  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  padding: 16,
 };
 
 const siderStyle: React.CSSProperties = {
@@ -13,7 +15,7 @@ const siderStyle: React.CSSProperties = {
   backgroundColor: "#1E1D1F",
 };
 
-const layoutStyle = {
+const layoutStyle: React.CSSProperties = {
   overflow: "hidden",
   height: "100vh",
 };
