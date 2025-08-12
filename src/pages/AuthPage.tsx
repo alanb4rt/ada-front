@@ -1,45 +1,49 @@
-import { Form, Input, Button, Typography, Divider, Space, Flex } from "antd";
+import { Form, Input, Button, Typography, Divider, Flex } from 'antd'
+import { emailOrPhoneRule, emailRule, phoneRule } from '../rules'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 const AuthPage = () => {
-  const onFinishSignup = (values) => {
-    console.log("Sign Up :", values);
-  };
+  const onFinishSignup = (values: any) => {
+    console.log('Sign Up :', values)
+  }
 
-  const onFinishLogin = (values) => {
-    console.log("Login :", values);
-  };
+  const onFinishLogin = (values: any) => {
+    console.log('Login :', values)
+  }
 
   return (
     <Flex
-    vertical
-    justify="center"
-    align="center"
+      vertical
+      justify="center"
+      align="center"
+      gap={50}
       style={{
-        backgroundColor: "#1e1e1e",
-        color: "white",
-        border: "1px solid #ccc",
-        width: "100%",
-        height: "100vh",
+        backgroundColor: '#1e1e1e',
+        width: '100%',
+        height: '100vh',
       }}
     >
-      <Title level={2} style={{ color: "white" }}>
+      <Title level={2} style={{ color: 'white' }}>
         ADA
       </Title>
 
-      <Flex >
-        <Form layout="vertical" onFinish={onFinishSignup} style={{ width: 300 }}>
-          <Form.Item name="phone" label="Phone">
+      <Flex gap={150}>
+        <Form
+          layout="vertical"
+          onFinish={onFinishSignup}
+          style={{ width: 300, color: 'white' }}
+        >
+          <Form.Item name="phone" label="Phone" required rules={[phoneRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="email" label="Email">
+          <Form.Item name="email" label="Email" required rules={[emailRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password">
+          <Form.Item name="password" label="Password" required>
             <Input.Password />
           </Form.Item>
-          <Form.Item name="confirmPassword" label="Confirm password">
+          <Form.Item name="confirmPassword" label="Confirm password" required>
             <Input.Password />
           </Form.Item>
           <Form.Item>
@@ -47,9 +51,9 @@ const AuthPage = () => {
               type="primary"
               htmlType="submit"
               style={{
-                backgroundColor: "red",
-                borderColor: "red",
-                width: "100%",
+                backgroundColor: 'red',
+                borderColor: 'red',
+                width: '100%',
               }}
             >
               Sign up
@@ -57,13 +61,21 @@ const AuthPage = () => {
           </Form.Item>
         </Form>
 
-        <Divider type="vertical" style={{ height: "100%" }} />
+        <Divider
+          type="vertical"
+          style={{ height: '100%', borderColor: 'white' }}
+        />
 
         <Form layout="vertical" onFinish={onFinishLogin} style={{ width: 300 }}>
-          <Form.Item name="login" label="Phone / Email">
+          <Form.Item
+            name="login"
+            label="Phone / Email"
+            required
+            rules={[emailOrPhoneRule()]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password">
+          <Form.Item name="password" label="Password" required>
             <Input.Password />
           </Form.Item>
           <Form.Item>
@@ -71,9 +83,9 @@ const AuthPage = () => {
               type="primary"
               htmlType="submit"
               style={{
-                backgroundColor: "red",
-                borderColor: "red",
-                width: "100%",
+                backgroundColor: 'red',
+                borderColor: 'red',
+                width: '100%',
               }}
             >
               Login
@@ -82,7 +94,7 @@ const AuthPage = () => {
         </Form>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default AuthPage;
+export default AuthPage
