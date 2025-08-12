@@ -1,9 +1,14 @@
 import { Avatar, Space, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import type { User } from "../models/User";
 
 const { Text } = Typography;
 
-export default function UserCard({ user }) {
+interface Props {
+  user: User;
+}
+
+export default function UserCard({ user }: Props) {
   return (
     <Space
       style={{

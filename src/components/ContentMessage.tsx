@@ -1,5 +1,5 @@
 import { Flex, Input } from "antd";
-import MessageCard from "./messageCard";
+import MessageCard from "./MessageCard";
 
 const inputStyle: React.CSSProperties = {
   borderRadius: 8,
