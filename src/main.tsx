@@ -2,7 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import Router from "./routes.tsx";
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider } from "antd";
+import { AuthProvider } from "./context/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -26,7 +27,9 @@ createRoot(document.getElementById("root")!).render(
         },
       }}
     >
-      <Router />
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
     </ConfigProvider>
   </StrictMode>
 );
