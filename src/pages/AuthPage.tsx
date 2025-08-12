@@ -7,7 +7,6 @@ const { Title } = Typography
 const AuthPage = () => {
   const { login } = useAuth()
   const onFinishSignup = (values: any) => {
-    console.log('Sign Up :', values)
     login(values).then(response => {
     console.log('Login successful:', response)
   }).catch(error => {
@@ -53,7 +52,7 @@ const AuthPage = () => {
         ADA
       </Title>
 
-      <Flex gap={150}>
+      <Flex gap={150} align='center' justify='center'>
         <Form
           layout="vertical"
           onFinish={onFinishSignup}
@@ -65,7 +64,7 @@ const AuthPage = () => {
           <Form.Item name="email" label="Email" required rules={[emailRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password" required>
+          <Form.Item name="passwordLogin" label="Password" required>
             <Input.Password />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Confirm password" required>
@@ -91,7 +90,7 @@ const AuthPage = () => {
           style={{ height: '100%', borderColor: 'white' }}
         />
 
-        <Form layout="vertical" onFinish={onFinishLogin} style={{ width: 300 }}>
+        <Form layout="vertical"  onFinish={onFinishLogin} style={{ width: 300 }}>
           <Form.Item
             name="login"
             label="Phone / Email"

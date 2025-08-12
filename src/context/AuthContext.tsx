@@ -23,7 +23,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const response = await axios.post(LOGIN_URL, data, { headers });
 
-    // Exemple : si ton API renvoie { token, user }
     setToken(response.data.token);
     setUser(response.data.user);
   };
