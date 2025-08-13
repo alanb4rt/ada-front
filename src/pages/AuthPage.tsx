@@ -5,9 +5,10 @@ import { useAuth } from '../context/AuthContext'
 const { Title } = Typography
 
 const AuthPage = () => {
-  const { login } = useAuth()
+  const { login, register } = useAuth()
+  
   const onFinishSignup = (values: any) => {
-    login(values).then(response => {
+    register(values).then(response => {
     console.log('Login successful:', response)
   }).catch(error => {
     console.error('Login failed:', error)
