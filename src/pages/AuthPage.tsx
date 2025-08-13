@@ -1,6 +1,7 @@
 import { Button, Divider, Flex, Form, Input, Typography } from 'antd'
 import { useNavigate } from 'react-router'
 import { useAuth } from '../context/AuthContext'
+import type { Login, Register } from '../models/Auth'
 import {
   capsRule,
   containsNumberRule,
@@ -17,18 +18,20 @@ const { Title } = Typography
 const AuthPage = () => {
   const { login, register } = useAuth()
   const navigate = useNavigate()
+  const [form] = Form.useForm()
 
-  const onFinishSignup = (values: any) => {
+  const onFinishSignup = (values: Register) => {
     register(values)
-      .then((response) => {
-        console.log('Register successful:', response)
+      .then(() => {
+        navigate('/')
+        form.resetFields()
       })
       .catch((error) => {
         console.error('Register failed:', error)
       })
   }
 
-  const onFinishLogin = (values: any) => {
+  const onFinishLogin = (values: Login) => {
     const formattedValues = { ...values }
 
     if (values.login) {
@@ -43,8 +46,7 @@ const AuthPage = () => {
     }
 
     login(formattedValues)
-      .then((response) => {
-        console.log('Login successful:', response)
+      .then(() => {
         navigate('/')
       })
       .catch((error) => {
@@ -70,6 +72,7 @@ const AuthPage = () => {
 
       <Flex gap={150} align="center" justify="center">
         <Form
+          form={form}
           layout="vertical"
           onFinish={onFinishSignup}
           style={{ width: 300, color: 'white' }}
