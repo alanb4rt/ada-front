@@ -28,3 +28,36 @@ export const emailOrPhoneRule = () => ({
     return Promise.reject('Input must be a valid email or phone number')
   },
 })
+
+export const minLengthRule = function (length: number): Rule {
+  return {
+    pattern: new RegExp(`.{${length.toString()},}`, 'g'),
+    message: `The value must have at least ${length} characters`,
+  }
+}
+
+export const capsRule = function (): Rule {
+  return {
+    pattern: new RegExp(/[A-Z]+/g),
+    message: 'The value must include a capital letter',
+  }
+}
+export const lowercaseRule = function (): Rule {
+  return {
+    pattern: new RegExp(/[a-z]+/g),
+    message: 'The value must contain at least one lowercase letter',
+  }
+}
+
+export const containsNumberRule = function (): Rule {
+  return {
+    pattern: new RegExp(/\d+/g),
+    message: 'The value must have at least one number',
+  }
+}
+export const containsSymbolRule = function (): Rule {
+  return {
+    pattern: new RegExp(/\W+/g),
+    message: 'The value must have at least one symbol',
+  }
+}
