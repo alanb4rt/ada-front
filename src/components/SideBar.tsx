@@ -1,5 +1,6 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
-import { Button, Flex, Space, Typography } from 'antd'
+import { ArrowLeftOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Button, Drawer, Flex, Space, Typography } from 'antd'
+import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import UserCard from './UserCard'
 
@@ -16,8 +17,43 @@ const users = [
 export default function SideBar() {
   const { logout } = useAuth()
 
+  const [open, setOpen] = useState(false)
+
   return (
     <Flex vertical style={{ height: '100vh' }}>
+      <SideBarContent value={{ setOpen }} />
+      <Drawer
+        title="New conversation"
+        closeIcon={<ArrowLeftOutlined />}
+        placement="left"
+        width={255}
+        onClose={() => setOpen(false)}
+        open={open}
+        mask={false}
+        maskClosable={false}
+      >
+        <Space
+          direction="vertical"
+          size={16}
+          style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
+        >
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </Space>
+      </Drawer>
+      <Button style={{ height: 64 }} onClick={logout}>
+        Logout
+      </Button>
+    </Flex>
+  )
+}
+
+function SideBarContent({ value }: any) {
+  const { setOpen } = value
+
+  return (
+    <>
       <Flex
         justify="center"
         align="center"
@@ -33,6 +69,7 @@ export default function SideBar() {
             position: 'absolute',
             right: 16,
           }}
+          onClick={() => setOpen(true)}
         />
       </Flex>
       <Space
@@ -44,9 +81,6 @@ export default function SideBar() {
           <UserCard key={user.id} user={user} />
         ))}
       </Space>
-      <Button style={{ height: 64 }} onClick={logout}>
-        Logout
-      </Button>
-    </Flex>
+    </>
   )
 }
