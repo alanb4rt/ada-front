@@ -3,27 +3,16 @@ import {
   MinusCircleOutlined,
   PlusCircleOutlined,
   PlusOutlined,
-  UserAddOutlined,
 } from '@ant-design/icons'
-import { Avatar, Button, Drawer, Flex, Form, Input, Space, Typography } from 'antd'
+import { Button, Drawer, Flex, Form, Input, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import UserCard from './UserCard'
-import type { SearchProps } from 'antd/es/input'
 import { createGroup, fetchGroups } from '../services/GroupService'
-import { emailOrPhoneRule, emailRule, phoneRule } from '../rules'
+import { emailOrPhoneRule } from '../rules'
 
-const { Text, Title } = Typography
-const { Search } = Input;
+const { Title } = Typography
 
-
-const users = [
-  { id: 1, name: 'Test', href: 'test' },
-  { id: 2, name: 'Test', href: 'test' },
-  { id: 3, name: 'Test', href: 'test' },
-  { id: 4, name: 'Test', href: 'test' },
-  { id: 5, name: 'Test', href: 'test' },
-]
 
 const drawerBodyStyle: React.CSSProperties = {
   paddingInline: 0,
@@ -32,6 +21,8 @@ const drawerBodyStyle: React.CSSProperties = {
 export default function SideBar() {
   const { logout, token } = useAuth()
   const [form] = Form.useForm()
+    const contacts = Form.useWatch('users', form) || []
+
 
   const [open, setOpen] = useState<boolean>(false)
   const onFinishGroup = (values: any) => {
@@ -88,8 +79,8 @@ export default function SideBar() {
           style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
         >
           <Form form={form} layout="vertical" onFinish={onFinishGroup}>
-            <Form.Item name="name">
-              <Input placeholder="Name of group" />
+            <Form.Item name="name" label="Group name"   rules={[{ required: true, message: 'Please enter a group name' }]}>
+              <Input />
             </Form.Item>
             <Form.List name="users">
             {(fields, { add, remove }) => (
@@ -108,21 +99,22 @@ export default function SideBar() {
                     <MinusCircleOutlined onClick={() => remove(name)} />
                   </Space>
                 ))}
-              <Form.Item>
-            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-              Add contact
-            </Button>
-          </Form.Item>
-        </>
-      )}
-    </Form.List>
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />} >
+                    Add contact
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
             
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
-              Create
-            </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={contacts.length === 0}
+          >
+            Create
+          </Button>
           </Form>
         </Space>
       </Drawer>
@@ -134,9 +126,13 @@ export default function SideBar() {
   )
 }
 
-function SideBarContent({ value }: any) {
+interface Props {
+  setOpen: (open: boolean) => void
+  open: boolean
+}
+
+function SideBarContent({ setOpen, open }: Props) {
   const { token } = useAuth()
-  const { setOpen, open } = value
 
   const [groups, setGroups] = useState<Array<any>>([])
 
