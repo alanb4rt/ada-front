@@ -1,5 +1,5 @@
 import { Form, Input, Button, Typography, Divider, Flex } from 'antd'
-import { emailOrPhoneRule, emailRule, phoneRule } from '../rules'
+import { capsRule, containsNumberRule, containsSymbolRule, emailOrPhoneRule, emailRule, lowercaseRule, minLengthRule, phoneRule } from '../rules'
 import { useAuth } from '../context/AuthContext'
 
 const { Title } = Typography
@@ -58,16 +58,16 @@ const AuthPage = () => {
           onFinish={onFinishSignup}
           style={{ width: 300, color: 'white' }}
         >
-          <Form.Item name="username" label="Username" required rules={[phoneRule()]}>
+          <Form.Item name="username" label="Username" required >
             <Input />
           </Form.Item>
-          <Form.Item name="phone" label="Phone" required >
+          <Form.Item name="phone" label="Phone" required rules={[phoneRule()]}>
             <Input />
           </Form.Item>
           <Form.Item name="mail" label="Email" required rules={[emailRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password" required>
+          <Form.Item name="password" label="Password" required rules={[capsRule(), lowercaseRule(), containsNumberRule(), containsSymbolRule(), minLengthRule(8)]}>
             <Input.Password />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Confirm password" required>
@@ -102,7 +102,7 @@ const AuthPage = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password" required>
+          <Form.Item name="password" label="Password" required rules={[capsRule(), lowercaseRule(), containsNumberRule(), containsSymbolRule(), minLengthRule(8)]}>
             <Input.Password />
           </Form.Item>
           <Form.Item>
