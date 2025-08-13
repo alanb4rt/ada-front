@@ -19,6 +19,9 @@ createRoot(document.getElementById('root')!).render(
             colorBorderSecondary: 'none',
             bodyPadding: 8,
           },
+          Drawer: {
+            colorBgElevated: '#1D1D1D',
+          },
           Input: {
             activeBorderColor: '#b74040',
           },
