@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { createContext, useContext, useState, type ReactNode } from 'react'
+import type { Register } from 'react-router'
+import type { Login } from '../models/Auth'
 import { AUTH_URL } from '../utils/urls'
 
 interface AuthContextType {
   token: string | null
   user: any | null
-  login: <T = any>(data: T) => Promise<void>
-  register: <T = any>(data: T) => Promise<void>
+  login: <T = Login>(data: T) => Promise<void>
+  register: <T = Register>(data: T) => Promise<void>
   logout: () => void
   isAuthenticated: boolean
 }
@@ -19,10 +21,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   )
   const [user, setUser] = useState<any | null>(() => {
     const userStr = localStorage.getItem('user')
-    return userStr ? JSON.parse(userStr) : null
+    return userStr ? userStr : null
   })
 
-  const login = async <T = any,>(data: T): Promise<void> => {
+  const login = async <T = Login,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     }
@@ -32,12 +34,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', JSON.stringify(response.data.user))
+    localStorage.setItem('user', response.data.user)
 
     return response.data
   }
 
-  const register = async <T = any,>(data: T): Promise<void> => {
+  const register = async <T = Register,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     }
@@ -47,7 +49,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', JSON.stringify(response.data.user))
+    localStorage.setItem('user', response.data.user)
   }
 
   const logout = () => {
