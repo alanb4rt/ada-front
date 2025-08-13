@@ -49,7 +49,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('user', response.data.user)
   }
 
-  const logout = () => {
+  const logout = async () => {
+    
+    await axios.post(`${AUTH_URL}/logout`)
     setToken(null)
     setUser(null)
     localStorage.clear()
