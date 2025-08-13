@@ -28,7 +28,7 @@ export default function App() {
   return (
     <>
       <Layout style={layoutStyle}>
-        <Sider width="20%" style={siderStyle}>
+        <Sider width="16rem" style={siderStyle}>
           <SideBar />
         </Sider>
         <Layout>
