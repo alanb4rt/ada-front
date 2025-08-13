@@ -1,8 +1,7 @@
 import axios from 'axios'
-import type { User } from '../models/User'
 import { GROUPE_URL } from '../utils/urls'
 
-async function fetchGroups(token: string): Promise<User[]> {
+async function fetchGroups(token: string): Promise<any> {
 
   try {
     const { data } = await axios.get(
