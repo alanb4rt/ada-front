@@ -33,6 +33,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
     localStorage.setItem('user', JSON.stringify(response.data.user))
+
+    return response.data
   }
 
   const register = async <T = any,>(data: T): Promise<void> => {
