@@ -1,9 +1,9 @@
+import { ConfigProvider, theme } from 'antd'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { AuthProvider } from './context/AuthContext.tsx'
 import './index.css'
 import Router from './routes.tsx'
-import { ConfigProvider, theme } from 'antd'
-import { AuthProvider } from './context/AuthContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -11,6 +11,9 @@ createRoot(document.getElementById('root')!).render(
       theme={{
         algorithm: theme.darkAlgorithm,
         components: {
+          Button: {
+            colorBgContainer: '#b74040',
+          },
           Card: {
             colorBgContainer: '#1D1D1D',
             colorBorderSecondary: 'none',
