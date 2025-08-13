@@ -1,18 +1,18 @@
-import axios from "axios";
-import { LOGIN_URL } from "../utils/urls";
+import axios from 'axios'
+import { LOGIN_URL } from '../utils/urls'
 
 const login = async <T = any,>(data: T, token?: string): Promise<any> => {
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+    'Content-Type': 'application/json',
   }
 
-  const response = await axios.post(LOGIN_URL, data, { headers });
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
 
-  return response.data;
-};
+  const response = await axios.post(LOGIN_URL, data, { headers })
 
-export { login };
+  return response.data
+}
+
+export { login }

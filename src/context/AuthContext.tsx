@@ -1,50 +1,50 @@
-import axios from "axios";
-import { createContext, useContext, useState, type ReactNode } from "react";
-import { AUTH_URL } from "../utils/urls";
+import axios from 'axios'
+import { createContext, useContext, useState, type ReactNode } from 'react'
+import { AUTH_URL } from '../utils/urls'
 
 interface AuthContextType {
-  token: string | null;
-  user: any | null;
-  login: <T = any>(data: T) => Promise<void>;
-  register: <T = any>(data: T) => Promise<void>;
-  logout: () => void;
-  isAuthenticated: boolean;
+  token: string | null
+  user: any | null
+  login: <T = any>(data: T) => Promise<void>
+  register: <T = any>(data: T) => Promise<void>
+  logout: () => void
+  isAuthenticated: boolean
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<any | null>(null);
+  const [token, setToken] = useState<string | null>(null)
+  const [user, setUser] = useState<any | null>(null)
 
-  const login = async <T = any>(data: T): Promise<void> => {
+  const login = async <T = any,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-    };
+      'Content-Type': 'application/json',
+    }
 
-    const response = await axios.post(`${AUTH_URL}/login`, data, { headers });
+    const response = await axios.post(`${AUTH_URL}/login`, data, { headers })
 
-    setToken(response.data.token);
-    setUser(response.data.user);
-  };
+    setToken(response.data.token)
+    setUser(response.data.user)
+  }
 
-  const register = async <T = any>(data: T): Promise<void> => {
+  const register = async <T = any,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-    };
+      'Content-Type': 'application/json',
+    }
 
-    const response = await axios.post(`${AUTH_URL}/register`, data, { headers });
+    const response = await axios.post(`${AUTH_URL}/register`, data, { headers })
 
-    setToken(response.data.token);
-    setUser(response.data.user);
-  };
+    setToken(response.data.token)
+    setUser(response.data.user)
+  }
 
   const logout = () => {
-    setToken(null);
-    setUser(null);
-  };
+    setToken(null)
+    setUser(null)
+  }
 
-  const isAuthenticated = !!token;
+  const isAuthenticated = !!token
 
   return (
     <AuthContext.Provider
@@ -52,15 +52,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
 const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider')
   }
-  return context;
-};
+  return context
+}
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth }
