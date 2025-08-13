@@ -1,3 +1,4 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { Button, Flex, Space, Typography } from 'antd'
 import { useAuth } from '../context/AuthContext'
 import UserCard from './UserCard'
@@ -17,7 +18,23 @@ export default function SideBar() {
 
   return (
     <Flex vertical style={{ height: '100vh' }}>
-      <Title level={4}>ADA</Title>
+      <Flex
+        justify="center"
+        align="center"
+        style={{ position: 'relative', padding: 16 }}
+      >
+        <Title level={4} style={{ margin: 0 }}>
+          ADA
+        </Title>
+        <PlusCircleOutlined
+          style={{
+            color: 'white',
+            fontSize: '16px',
+            position: 'absolute',
+            right: 16,
+          }}
+        />
+      </Flex>
       <Space
         direction="vertical"
         size={16}
