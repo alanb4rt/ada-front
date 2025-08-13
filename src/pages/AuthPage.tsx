@@ -45,7 +45,7 @@ const AuthPage = () => {
     login(formattedValues)
       .then((response) => {
         console.log('Login successful:', response)
-        window.location.href = '/'
+        navigate('/')
       })
       .catch((error) => {
         console.error('Login failed:', error)

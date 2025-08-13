@@ -19,7 +19,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   )
   const [user, setUser] = useState<any | null>(() => {
     const userStr = localStorage.getItem('user')
-    return userStr ? JSON.parse(userStr) : null
+    return userStr ? userStr : null
   })
 
   const login = async <T = any,>(data: T): Promise<void> => {
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', JSON.stringify(response.data.user))
+    localStorage.setItem('user', response.data.user)
 
     return response.data
   }
@@ -47,7 +47,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', JSON.stringify(response.data.user))
+    localStorage.setItem('user', response.data.user)
   }
 
   const logout = () => {
