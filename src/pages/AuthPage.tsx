@@ -1,4 +1,6 @@
-import { Form, Input, Button, Typography, Divider, Flex } from 'antd'
+import { Button, Divider, Flex, Form, Input, Typography } from 'antd'
+import { useNavigate } from 'react-router'
+import { useAuth } from '../context/AuthContext'
 import {
   capsRule,
   containsNumberRule,
@@ -9,20 +11,20 @@ import {
   minLengthRule,
   phoneRule,
 } from '../rules'
-import { useAuth } from '../context/AuthContext'
 
 const { Title } = Typography
 
 const AuthPage = () => {
   const { login, register } = useAuth()
+  const navigate = useNavigate()
 
   const onFinishSignup = (values: any) => {
     register(values)
       .then((response) => {
-        console.log('Login successful:', response)
+        console.log('Register successful:', response)
       })
       .catch((error) => {
-        console.error('Login failed:', error)
+        console.error('Register failed:', error)
       })
   }
 
@@ -43,6 +45,7 @@ const AuthPage = () => {
     login(formattedValues)
       .then((response) => {
         console.log('Login successful:', response)
+        window.location.href = '/'
       })
       .catch((error) => {
         console.error('Login failed:', error)
