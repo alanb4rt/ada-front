@@ -58,13 +58,16 @@ const AuthPage = () => {
           onFinish={onFinishSignup}
           style={{ width: 300, color: 'white' }}
         >
-          <Form.Item name="phone" label="Phone" required rules={[phoneRule()]}>
+          <Form.Item name="username" label="Username" required rules={[phoneRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="email" label="Email" required rules={[emailRule()]}>
+          <Form.Item name="phone" label="Phone" required >
             <Input />
           </Form.Item>
-          <Form.Item name="passwordLogin" label="Password" required>
+          <Form.Item name="mail" label="Email" required rules={[emailRule()]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="password" label="Password" required>
             <Input.Password />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Confirm password" required>

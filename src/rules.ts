@@ -1,7 +1,7 @@
 import type { Rule } from 'antd/es/form'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const phonePattern = /^\d{10}$/
+const phonePattern = /^(\+33|0)[1-9](\d{2}){4}$/
 
 export const emailRule = function (): Rule {
   return {
