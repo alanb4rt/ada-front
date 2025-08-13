@@ -6,7 +6,7 @@ const { Title } = Typography
 
 const AuthPage = () => {
   const { login, register } = useAuth()
-  
+
   const onFinishSignup = (values: any) => {
     register(values).then(response => {
     console.log('Login successful:', response)
@@ -20,7 +20,7 @@ const AuthPage = () => {
 
   if (values.login) {
     if (values.login.includes('@')) {
-      formattedValues.mail = values.login
+      formattedValues.email = values.login
       delete formattedValues.phone
     } else {
       formattedValues.phone = values.login
@@ -65,7 +65,7 @@ const AuthPage = () => {
           <Form.Item name="phone" label="Phone" required rules={[phoneRule()]}>
             <Input />
           </Form.Item>
-          <Form.Item name="mail" label="Email" required rules={[emailRule()]}>
+          <Form.Item name="email" label="Email" required rules={[emailRule()]}>
             <Input />
           </Form.Item>
           <Form.Item name="password" label="Password" required rules={[capsRule(), lowercaseRule(), containsNumberRule(), containsSymbolRule(), minLengthRule(8)]}>
