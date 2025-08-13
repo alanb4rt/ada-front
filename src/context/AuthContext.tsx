@@ -14,8 +14,11 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null)
-  const [user, setUser] = useState<any | null>(null)
+const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+  const [user, setUser] = useState<any | null>(() => {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
+  });
 
   const login = async <T = any,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
@@ -24,9 +27,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const response = await axios.post(`${AUTH_URL}/login`, data, { headers })
 
-    setToken(response.data.token)
-    setUser(response.data.user)
-  }
+    setToken(response.data.token);
+    setUser(response.data.user);
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+  };
 
   const register = async <T = any,>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
@@ -35,9 +40,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const response = await axios.post(`${AUTH_URL}/register`, data, { headers })
 
-    setToken(response.data.token)
-    setUser(response.data.user)
-  }
+    setToken(response.data.token);
+    setUser(response.data.user);
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+  };
 
   const logout = () => {
     setToken(null)
