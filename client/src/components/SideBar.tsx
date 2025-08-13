@@ -61,7 +61,7 @@ export default function SideBar() {
 
   return (
     <Flex vertical style={{ height: '100vh' }}>
-      <SideBarContent value={{ setOpen, open }} />
+      <SideBarContent open={open} setOpen={setOpen} />
       <Drawer
         title="New conversation"
         closeIcon={<ArrowLeftOutlined />}
@@ -143,7 +143,7 @@ function SideBarContent({ setOpen, open }: Props) {
     }).catch((error) => {
       console.error('Error fetching groups:', error)
     })
-  }, [open])
+  }, [open, token])
 
   return (
     <>
