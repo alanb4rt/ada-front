@@ -1,28 +1,28 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import Router from "./routes.tsx";
-import { ConfigProvider, theme } from "antd";
-import { AuthProvider } from "./context/AuthContext.tsx";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import Router from './routes.tsx'
+import { ConfigProvider, theme } from 'antd'
+import { AuthProvider } from './context/AuthContext.tsx'
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider
       theme={{
         algorithm: theme.darkAlgorithm,
         components: {
           Card: {
-            colorBgContainer: "#1D1D1D",
-            colorBorderSecondary: "none",
+            colorBgContainer: '#1D1D1D',
+            colorBorderSecondary: 'none',
             bodyPadding: 8,
           },
           Input: {
-            activeBorderColor: "#b74040",
+            activeBorderColor: '#b74040',
           },
           Layout: {
-            bodyBg: "#242424",
-            siderBg: "#1E1D1F",
-            headerBg: "#1E1D1F",
+            bodyBg: '#242424',
+            siderBg: '#1E1D1F',
+            headerBg: '#1E1D1F',
           },
         },
       }}
@@ -32,4 +32,4 @@ createRoot(document.getElementById("root")!).render(
       </AuthProvider>
     </ConfigProvider>
   </StrictMode>
-);
+)

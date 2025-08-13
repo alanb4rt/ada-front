@@ -1,20 +1,20 @@
-import { Flex, Input } from "antd";
-import MessageCard from "./MessageCard";
+import { Flex, Input } from 'antd'
+import MessageCard from './MessageCard'
 
 const inputStyle: React.CSSProperties = {
   borderRadius: 8,
-  backgroundColor: "#1D1D1D",
-  color: "white",
+  backgroundColor: '#1D1D1D',
+  color: 'white',
   padding: 8,
   paddingInline: 16,
-};
+}
 
 const sectionMessageStyle: React.CSSProperties = {
   flex: 1,
-  flexDirection: "column-reverse",
-  overflowY: "scroll",
+  flexDirection: 'column-reverse',
+  overflowY: 'scroll',
   padding: 16,
-};
+}
 
 export default function ContentMessage() {
   return (
@@ -31,5 +31,5 @@ export default function ContentMessage() {
         />
       </Flex>
     </>
-  );
+  )
 }

@@ -1,27 +1,27 @@
-import axios from "axios";
-import type { User } from "../models/User";
-import { USERS_URL } from "../utils/urls";
+import axios from 'axios'
+import type { User } from '../models/User'
+import { USERS_URL } from '../utils/urls'
 
 async function fetchUsers(): Promise<User[]> {
   try {
-    const { data } = await axios.get(USERS_URL);
+    const { data } = await axios.get(USERS_URL)
 
-    return data;
+    return data
   } catch (error) {
-    console.error("Fetching error:", error);
-    throw error;
+    console.error('Fetching error:', error)
+    throw error
   }
 }
 
 async function fetchUserById(id: number): Promise<User> {
   try {
-    const { data } = await axios.get(`${USERS_URL}/${id}`);
+    const { data } = await axios.get(`${USERS_URL}/${id}`)
 
-    return data;
+    return data
   } catch (error) {
-    console.error("Fetching error:", error);
-    throw error;
+    console.error('Fetching error:', error)
+    throw error
   }
 }
 
-export { fetchUsers, fetchUserById };
+export { fetchUsers, fetchUserById }

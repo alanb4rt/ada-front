@@ -1,28 +1,28 @@
-import { Layout } from "antd";
-import SideBar from "./components/SideBar";
-import ContentMessage from "./components/ContentMessage";
-import UserCard from "./components/UserCard";
+import { Layout } from 'antd'
+import SideBar from './components/SideBar'
+import ContentMessage from './components/ContentMessage'
+import UserCard from './components/UserCard'
 
-const { Content, Sider, Header } = Layout;
+const { Content, Sider, Header } = Layout
 
 const contentStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-};
+  display: 'flex',
+  flexDirection: 'column',
+}
 
 const siderStyle: React.CSSProperties = {
-  textAlign: "center",
-  borderRightColor: "rgba(255, 255, 255, .1)",
+  textAlign: 'center',
+  borderRightColor: 'rgba(255, 255, 255, .1)',
   borderRightWidth: 1,
-  borderRightStyle: "solid",
-};
+  borderRightStyle: 'solid',
+}
 
 const layoutStyle: React.CSSProperties = {
-  overflow: "hidden",
-  height: "100vh",
-};
+  overflow: 'hidden',
+  height: '100vh',
+}
 
-const user = { id: 1, name: "Test", href: "test" };
+const user = { id: 1, name: 'Test', href: 'test' }
 
 export default function App() {
   return (
@@ -41,5 +41,5 @@ export default function App() {
         </Layout>
       </Layout>
     </>
-  );
+  )
 }
