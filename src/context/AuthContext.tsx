@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<any | null>(null);
 
-  const login = async <T = any,>(data: T): Promise<void> => {
+  const login = async <T = any>(data: T): Promise<void> => {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
