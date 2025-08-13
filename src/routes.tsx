@@ -1,15 +1,21 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import App from './App'
+import ProtectedRoutes from './components/ProtectedRoutes'
 import AuthPage from './pages/AuthPage'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
-  },
-  {
     path: '/auth',
     element: <AuthPage />,
+  },
+  {
+    element: <ProtectedRoutes />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+      },
+    ],
   },
 ])
 
