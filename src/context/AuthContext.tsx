@@ -1,11 +1,12 @@
 import axios from "axios";
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { LOGIN_URL } from "../utils/urls";
+import { AUTH_URL } from "../utils/urls";
 
 interface AuthContextType {
   token: string | null;
   user: any | null;
   login: <T = any>(data: T) => Promise<void>;
+  register: <T = any>(data: T) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -21,7 +22,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       "Content-Type": "application/json",
     };
 
-    const response = await axios.post(LOGIN_URL, data, { headers });
+    const response = await axios.post(`${AUTH_URL}/login`, data, { headers });
+
+    setToken(response.data.token);
+    setUser(response.data.user);
+  };
+
+  const register = async <T = any>(data: T): Promise<void> => {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    const response = await axios.post(`${AUTH_URL}/register`, data, { headers });
 
     setToken(response.data.token);
     setUser(response.data.user);
@@ -36,7 +48,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ token, user, login, logout, isAuthenticated }}
+      value={{ token, user, login, register, logout, isAuthenticated }}
     >
       {children}
     </AuthContext.Provider>
