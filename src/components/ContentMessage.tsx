@@ -98,9 +98,8 @@ export default function ContentMessage() {
             {messages.map((message, index) => (
               <MessageCard
                 key={index}
-                content={message.content}
+                message={message}
                 messageOut={Number(message.sender_id) === user?.id}
-                createdAt={message.created_at}
               />
             ))}
           </Flex>
