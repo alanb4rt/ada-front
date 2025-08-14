@@ -11,7 +11,7 @@ interface Props {
   active?: boolean
 }
 
-export default function GroupeCard({ users, active, groupName }: Props) {
+export default function GroupeAvatar({ users, active, groupName }: Props) {
   const { user } = useAuth()
 
   const baseStyle = {

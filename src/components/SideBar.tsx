@@ -11,7 +11,7 @@ import { useGroup } from '../context/GroupContext'
 import type { Group } from '../models/Group'
 import { emailOrPhoneRule } from '../rules'
 import { createGroup, fetchGroups } from '../services/GroupService'
-import GroupeCard from './GroupeCard'
+import GroupeAvatar from './GroupeAvatar'
 
 const { Title } = Typography
 
@@ -190,7 +190,7 @@ function SideBarContent({ setOpen, open }: Props) {
       >
         {[...groups].reverse().map((group) => (
           <div onClick={() => setCurrentGroup(group)}>
-            <GroupeCard
+            <GroupeAvatar
               key={group.id}
               users={group.users}
               groupName={group.name}

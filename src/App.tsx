@@ -1,7 +1,7 @@
 import { Layout } from 'antd'
 import { useEffect } from 'react'
 import ContentMessage from './components/ContentMessage'
-import GroupeCard from './components/GroupeCard'
+import GroupeAvatar from './components/GroupeAvatar'
 import SideBar from './components/SideBar'
 import { useAuth } from './context/AuthContext'
 import { GroupProvider, useGroup } from './context/GroupContext'
@@ -46,7 +46,7 @@ export function AppContent() {
         {currentGroup && (
           <Layout>
             <Header>
-              <GroupeCard
+              <GroupeAvatar
                 key={currentGroup.id}
                 users={currentGroup.users}
                 groupName={currentGroup.name}
