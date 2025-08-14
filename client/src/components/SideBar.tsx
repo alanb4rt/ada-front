@@ -7,12 +7,11 @@ import {
 import { Button, Drawer, Flex, Form, Input, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import UserCard from './UserCard'
-import { createGroup, fetchGroups } from '../services/GroupService'
 import { emailOrPhoneRule } from '../rules'
+import { createGroup, fetchGroups } from '../services/GroupService'
+import UserCard from './UserCard'
 
 const { Title } = Typography
-
 
 const drawerBodyStyle: React.CSSProperties = {
   paddingInline: 0,
@@ -21,43 +20,39 @@ const drawerBodyStyle: React.CSSProperties = {
 export default function SideBar() {
   const { logout, token } = useAuth()
   const [form] = Form.useForm()
-    const contacts = Form.useWatch('users', form) || []
-
+  const contacts = Form.useWatch('users', form) || []
 
   const [open, setOpen] = useState<boolean>(false)
   const onFinishGroup = (values: any) => {
-    const emails: string[] = [];
-    const phones: string[] = [];
+    const emails: string[] = []
+    const phones: string[] = []
 
     values.users?.forEach((user: { login: string }) => {
-      if (!user.login) return;
+      if (!user.login) return
 
       if (user.login.includes('@')) {
-        emails.push(user.login);
+        emails.push(user.login)
       } else {
-        phones.push(user.login);
+        phones.push(user.login)
       }
-    });
+    })
 
     const formattedValues = {
       name: values.name,
       emails: emails.length > 0 ? emails : undefined,
-      phones : phones.length > 0 ? phones : undefined,
-    };
+      phones: phones.length > 0 ? phones : undefined,
+    }
 
     createGroup(formattedValues, token || '')
       .then((res) => {
-        console.log('Group created:', res);
-        form.resetFields();
-        setOpen(false);
+        console.log('Group created:', res)
+        form.resetFields()
+        setOpen(false)
       })
       .catch((err) => {
-        console.error('Error creating group:', err);
-      });
-  };
-
-
-
+        console.error('Error creating group:', err)
+      })
+  }
 
   return (
     <Flex vertical style={{ height: '100vh' }}>
@@ -79,46 +74,59 @@ export default function SideBar() {
           style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
         >
           <Form form={form} layout="vertical" onFinish={onFinishGroup}>
-            <Form.Item name="name" label="Group name"   rules={[{ required: true, message: 'Please enter a group name' }]}>
+            <Form.Item
+              name="name"
+              label="Group name"
+              rules={[{ required: true, message: 'Please enter a group name' }]}
+            >
               <Input />
             </Form.Item>
             <Form.List name="users">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'login']}
-                      label="Phone / Email"
-                      required
-                      rules={[emailOrPhoneRule()]}
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ marginBottom: 8 }}
+                      align="baseline"
                     >
-                      <Input />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />} >
-                    Add contact
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-            
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={contacts.length === 0}
-          >
-            Create
-          </Button>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'login']}
+                        label="Phone / Email"
+                        required
+                        rules={[emailOrPhoneRule()]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add contact
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={contacts.length === 0}
+            >
+              Create
+            </Button>
           </Form>
         </Space>
       </Drawer>
-      
+
       <Button style={{ height: 64 }} onClick={logout}>
         Logout
       </Button>
@@ -138,11 +146,13 @@ function SideBarContent({ setOpen, open }: Props) {
 
   useEffect(() => {
     if (open) return
-    fetchGroups(token || '').then((data) => {
-      setGroups(data)
-    }).catch((error) => {
-      console.error('Error fetching groups:', error)
-    })
+    fetchGroups(token || '')
+      .then((data) => {
+        setGroups(data)
+      })
+      .catch((error) => {
+        console.error('Error fetching groups:', error)
+      })
   }, [open, token])
 
   return (
@@ -171,9 +181,8 @@ function SideBarContent({ setOpen, open }: Props) {
         style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
       >
         {[...groups].reverse().map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
-
+          <UserCard key={user.id} user={user} />
+        ))}
       </Space>
     </>
   )
