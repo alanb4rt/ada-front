@@ -44,7 +44,7 @@ export default function ContentMessage() {
   }, [currentGroup, token])
 
   usePusher({
-    channelName: `group.${currentGroup}`,
+    channelName: currentGroup ? `group.${currentGroup}` : null,
     eventName: 'message.sent',
     callback: (data) => {
       if (data && data.message) {
@@ -65,22 +65,16 @@ export default function ContentMessage() {
       })
   }
 
-  useEffect(() => {
-    console.log('m', messages)
-    console.log('u', user)
-  }, [messages, user])
-
   return (
     <>
       <Flex style={sectionMessageStyle} gap={8}>
-        {Array.isArray(messages) &&
-          messages.map((messageContent, index) => (
-            <MessageCard
-              key={index}
-              content={messageContent.content}
-              messageOut={messageContent.sender_id === user.id}
-            />
-          ))}
+        {messages.map((message, index) => (
+          <MessageCard
+            key={index}
+            content={message.content}
+            messageOut={message.sender_id === user.id}
+          />
+        ))}
       </Flex>
       <Flex style={{ padding: 16 }}>
         <Input
