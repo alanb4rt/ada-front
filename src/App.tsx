@@ -1,8 +1,11 @@
 import { Layout } from 'antd'
+import { useEffect } from 'react'
 import ContentMessage from './components/ContentMessage'
 import SideBar from './components/SideBar'
 import UserCard from './components/UserCard'
+import { useAuth } from './context/AuthContext'
 import { GroupProvider, useGroup } from './context/GroupContext'
+import { fetchGroups } from './services/GroupService'
 
 const { Content, Sider, Header } = Layout
 
@@ -26,8 +29,16 @@ const layoutStyle: React.CSSProperties = {
 const user = { id: 1, name: 'Test', href: 'test' }
 
 export function AppContent() {
-  const { currentGroup } = useGroup()
+  const { currentGroup, setCurrentGroup } = useGroup()
+  const { token } = useAuth()
 
+  useEffect(() => {
+    fetchGroups(token || '').then((groups) => {
+      if (groups && groups.length > 0) {
+        setCurrentGroup(groups[groups.length - 1].id)
+      }
+    })
+  }, [token, setCurrentGroup])
   return (
     <>
       <Layout style={layoutStyle}>
