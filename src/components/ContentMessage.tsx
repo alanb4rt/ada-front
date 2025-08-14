@@ -63,10 +63,6 @@ export default function ContentMessage() {
       })
   }
 
-  useEffect(() => {
-    console.log(messages)
-  }, [messages])
-
   return (
     <>
       <Flex style={sectionMessageStyle} gap={8}>
@@ -75,7 +71,7 @@ export default function ContentMessage() {
             <MessageCard
               key={index}
               content={messageContent.content}
-              messageOut={messageContent.user_id === user.id}
+              messageOut={messageContent.sender_id === user.id}
             />
           ))}
       </Flex>
