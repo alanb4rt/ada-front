@@ -47,6 +47,7 @@ export default function GroupeAvatar({ users, active, groupName }: Props) {
   } else if (correspondantUsers.length >= 3) {
     return (
       <Space style={{ ...baseStyle, ...activeStyle }} size={16}>
+        <Avatar size={40}>Gr</Avatar>
         <Text>{groupName}</Text>
       </Space>
     )
