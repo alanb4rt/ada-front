@@ -1,4 +1,4 @@
-import { Flex, Input } from 'antd'
+import { Flex, Input, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useGroup } from '../context/GroupContext'
@@ -30,16 +30,21 @@ export default function ContentMessage() {
 
   const [messages, setMessages] = useState<any>([])
   const [currentMessage, setCurrentMessage] = useState<string>('')
+  const [loading, setLoading] = useState(true) // Loader
 
   useEffect(() => {
     if (!token || !currentGroup) return
 
+    setLoading(true)
     fetchMessagesAPI(token, currentGroup.id)
       .then((data) => {
         setMessages(data)
       })
       .catch((error) => {
         console.error('Error fetching messages:', error)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [currentGroup, token])
 
@@ -67,15 +72,27 @@ export default function ContentMessage() {
 
   return (
     <>
-      <Flex style={sectionMessageStyle} gap={8}>
-        {messages.map((message, index) => (
-          <MessageCard
-            key={index}
-            content={message.content}
-            messageOut={message.sender_id === user.id}
-          />
-        ))}
-      </Flex>
+      {loading ? (
+        <Flex
+          style={sectionMessageStyle}
+          gap={8}
+          justify="center"
+          align="center"
+        >
+          <Spin size="large" />
+        </Flex>
+      ) : (
+        <Flex style={sectionMessageStyle} gap={8}>
+          {messages.map((message, index) => (
+            <MessageCard
+              key={index}
+              content={message.content}
+              messageOut={message.sender_id === user.id}
+            />
+          ))}
+        </Flex>
+      )}
+
       <Flex style={{ padding: 16 }}>
         <Input
           placeholder="Enter your message"
