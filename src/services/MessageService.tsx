@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type { Message } from '../models/Message'
 import { API_URL } from '../utils/urls'
 
 async function fetchMessages(token: string, groupId: number): Promise<any> {
@@ -18,8 +19,8 @@ async function fetchMessages(token: string, groupId: number): Promise<any> {
 
 async function postMessage(
   token: string,
-  groupId: any,
-  message: any
+  groupId: number,
+  message: Message
 ): Promise<any> {
   try {
     const { data } = await axios.post(

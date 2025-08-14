@@ -8,6 +8,7 @@ import { Button, Drawer, Flex, Form, Input, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useGroup } from '../context/GroupContext'
+import type { Group } from '../models/Group'
 import { emailOrPhoneRule } from '../rules'
 import { createGroup, fetchGroups } from '../services/GroupService'
 import GroupeCard from './GroupeCard'
@@ -145,7 +146,7 @@ function SideBarContent({ setOpen, open }: Props) {
   const { token } = useAuth()
   const { setCurrentGroup, currentGroup } = useGroup()
 
-  const [groups, setGroups] = useState<Array<any>>([])
+  const [groups, setGroups] = useState<Array<Group>>([])
 
   useEffect(() => {
     if (open) return

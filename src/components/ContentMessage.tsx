@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useGroup } from '../context/GroupContext'
 import usePusher from '../hooks/usePusher'
+import type { Message } from '../models/Message'
 import {
   fetchMessages as fetchMessagesAPI,
   postMessage as postMessageAPI,
@@ -28,9 +29,9 @@ export default function ContentMessage() {
   const { user, token } = useAuth()
   const { currentGroup } = useGroup()
 
-  const [messages, setMessages] = useState<any>([])
+  const [messages, setMessages] = useState<Array<Message>>([])
   const [currentMessage, setCurrentMessage] = useState<string>('')
-  const [loading, setLoading] = useState(true) // Loader
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (!token || !currentGroup) return
@@ -66,9 +67,12 @@ export default function ContentMessage() {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
+            id: Date.now().toString(),
             content: currentMessage,
             sender_id: user.id,
+            group_id: currentGroup.id,
             created_at: new Date().toISOString(),
+            sender: user,
           },
         ])
         setCurrentMessage('')

@@ -7,11 +7,12 @@ import {
   type ReactNode,
 } from 'react'
 import type { Login, Register } from '../models/Auth'
+import type { User } from '../models/User'
 import { AUTH_URL } from '../utils/urls'
 
 interface AuthContextType {
   token: string | null
-  user: any | null
+  user: User | null
   login: (data: Login) => Promise<void>
   register: (data: Register) => Promise<void>
   logout: () => void
@@ -24,7 +25,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem('token')
   )
-  const [user, setUser] = useState<any | null>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   const login = async (data: Login) => {
     const headers = {

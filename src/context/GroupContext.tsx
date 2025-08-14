@@ -6,16 +6,17 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react'
+import type { Group } from '../models/Group'
 
 interface GroupContextType {
-  currentGroup: any | null
-  setCurrentGroup: Dispatch<SetStateAction<any | null>>
+  currentGroup: Group | null
+  setCurrentGroup: Dispatch<SetStateAction<Group | null>>
 }
 
 const GroupContext = createContext<GroupContextType | undefined>(undefined)
 
 const GroupProvider = ({ children }: { children: ReactNode }) => {
-  const [currentGroup, setCurrentGroup] = useState<any | null>(null)
+  const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
 
   const valueContext = { currentGroup, setCurrentGroup }
 
