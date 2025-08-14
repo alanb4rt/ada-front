@@ -63,6 +63,14 @@ export default function ContentMessage() {
 
     postMessageAPI(token, currentGroup.id, currentMessage)
       .then(() => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            content: currentMessage,
+            sender_id: user.id,
+            created_at: new Date().toISOString(),
+          },
+        ])
         setCurrentMessage('')
       })
       .catch((error) => {
@@ -78,12 +86,13 @@ export default function ContentMessage() {
             <Spin size="large" />
           </Flex>
         ) : (
-          <Flex vertical>
+          <Flex vertical gap={8}>
             {messages.map((message, index) => (
               <MessageCard
                 key={index}
                 content={message.content}
                 messageOut={message.sender_id === user.id}
+                createdAt={message.created_at}
               />
             ))}
           </Flex>
