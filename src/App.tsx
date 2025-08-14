@@ -30,8 +30,6 @@ export function AppContent() {
   const { currentGroup, setCurrentGroup } = useGroup()
   const { token } = useAuth()
 
-  console.log('Current groupe:', currentGroup)
-
   useEffect(() => {
     fetchGroups(token || '').then((groups) => {
       if (groups && groups.length > 0) {
