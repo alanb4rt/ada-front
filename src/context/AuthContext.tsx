@@ -1,5 +1,11 @@
 import axios from 'axios'
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react'
 import type { Login, Register } from '../models/Auth'
 import { AUTH_URL } from '../utils/urls'
 
@@ -15,13 +21,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(() =>
+  const [token, setToken] = useState<string | null>(
     localStorage.getItem('token')
   )
-  const [user, setUser] = useState<any | null>(() => {
-    const userStr = localStorage.getItem('user')
-    return userStr ? userStr : null
-  })
+  const [user, setUser] = useState<any | null>(null)
 
   const login = async (data: Login) => {
     const headers = {
@@ -33,7 +36,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', response.data.user)
   }
 
   const register = async (data: Register) => {
@@ -46,7 +48,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(response.data.token)
     setUser(response.data.user)
     localStorage.setItem('token', response.data.token)
-    localStorage.setItem('user', response.data.user)
   }
 
   const logout = async () => {
@@ -64,6 +65,25 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null)
     localStorage.clear()
   }
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`${AUTH_URL}/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          setUser(response.data)
+        })
+        .catch((error) => {
+          console.error('Failed to fetch user data:', error)
+          setUser(null)
+        })
+    }
+  }, [token])
 
   const isAuthenticated = !!token
 
