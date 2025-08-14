@@ -72,26 +72,23 @@ export default function ContentMessage() {
 
   return (
     <>
-      {loading ? (
-        <Flex
-          style={sectionMessageStyle}
-          gap={8}
-          justify="center"
-          align="center"
-        >
-          <Spin size="large" />
-        </Flex>
-      ) : (
-        <Flex style={sectionMessageStyle} gap={8}>
-          {messages.map((message, index) => (
-            <MessageCard
-              key={index}
-              content={message.content}
-              messageOut={message.sender_id === user.id}
-            />
-          ))}
-        </Flex>
-      )}
+      <Flex style={sectionMessageStyle} gap={8}>
+        {loading ? (
+          <Flex justify="center" align="center">
+            <Spin size="large" />
+          </Flex>
+        ) : (
+          <Flex vertical>
+            {messages.map((message, index) => (
+              <MessageCard
+                key={index}
+                content={message.content}
+                messageOut={message.sender_id === user.id}
+              />
+            ))}
+          </Flex>
+        )}
+      </Flex>
 
       <Flex style={{ padding: 16 }}>
         <Input
