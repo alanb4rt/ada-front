@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext'
 import { useGroup } from '../context/GroupContext'
 import { emailOrPhoneRule } from '../rules'
 import { createGroup, fetchGroups } from '../services/GroupService'
-import UserCard from './UserCard'
+import GroupeCard from './GroupeCard'
 
 const { Title } = Typography
 
@@ -143,7 +143,7 @@ interface Props {
 
 function SideBarContent({ setOpen, open }: Props) {
   const { token } = useAuth()
-  const { setCurrentGroup } = useGroup()
+  const { setCurrentGroup, currentGroup } = useGroup()
 
   const [groups, setGroups] = useState<Array<any>>([])
 
@@ -185,9 +185,14 @@ function SideBarContent({ setOpen, open }: Props) {
         size={16}
         style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
       >
-        {[...groups].reverse().map((user) => (
-          <div onClick={() => setCurrentGroup(user.id)}>
-            <UserCard key={user.id} user={user} />
+        {[...groups].reverse().map((group) => (
+          <div onClick={() => setCurrentGroup(group)}>
+            <GroupeCard
+              key={group.id}
+              users={group.users}
+              groupName={group.name}
+              active={currentGroup.id === group.id}
+            />
           </div>
         ))}
       </Space>

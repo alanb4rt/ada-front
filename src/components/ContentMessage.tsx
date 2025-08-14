@@ -28,13 +28,13 @@ export default function ContentMessage() {
   const { user, token } = useAuth()
   const { currentGroup } = useGroup()
 
-  const [messages, setMessages] = useState([])
-  const [currentMessage, setCurrentMessage] = useState('')
+  const [messages, setMessages] = useState<any>([])
+  const [currentMessage, setCurrentMessage] = useState<string>('')
 
   useEffect(() => {
     if (!token || !currentGroup) return
 
-    fetchMessagesAPI(token, currentGroup)
+    fetchMessagesAPI(token, currentGroup.id)
       .then((data) => {
         setMessages(data)
       })
@@ -44,7 +44,7 @@ export default function ContentMessage() {
   }, [currentGroup, token])
 
   usePusher({
-    channelName: currentGroup ? `group.${currentGroup}` : null,
+    channelName: currentGroup ? `group.${currentGroup.id}` : null,
     eventName: 'message.sent',
     callback: (data) => {
       if (data && data.message) {
@@ -56,7 +56,7 @@ export default function ContentMessage() {
   const handleSendMessage = async () => {
     if (!token || !currentGroup || !currentMessage.trim()) return
 
-    postMessageAPI(token, currentGroup, currentMessage)
+    postMessageAPI(token, currentGroup.id, currentMessage)
       .then(() => {
         setCurrentMessage('')
       })

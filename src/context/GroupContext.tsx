@@ -8,14 +8,14 @@ import {
 } from 'react'
 
 interface GroupContextType {
-  currentGroup: number | null
-  setCurrentGroup: Dispatch<SetStateAction<number | null>>
+  currentGroup: any | null
+  setCurrentGroup: Dispatch<SetStateAction<any | null>>
 }
 
 const GroupContext = createContext<GroupContextType | undefined>(undefined)
 
 const GroupProvider = ({ children }: { children: ReactNode }) => {
-  const [currentGroup, setCurrentGroup] = useState<number | null>(null)
+  const [currentGroup, setCurrentGroup] = useState<any | null>(null)
 
   const valueContext = { currentGroup, setCurrentGroup }
 

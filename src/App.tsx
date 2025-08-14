@@ -1,8 +1,8 @@
 import { Layout } from 'antd'
 import { useEffect } from 'react'
 import ContentMessage from './components/ContentMessage'
+import GroupeCard from './components/GroupeCard'
 import SideBar from './components/SideBar'
-import UserCard from './components/UserCard'
 import { useAuth } from './context/AuthContext'
 import { GroupProvider, useGroup } from './context/GroupContext'
 import { fetchGroups } from './services/GroupService'
@@ -26,16 +26,16 @@ const layoutStyle: React.CSSProperties = {
   height: '100vh',
 }
 
-const user = { id: 1, name: 'Test', href: 'test' }
-
 export function AppContent() {
   const { currentGroup, setCurrentGroup } = useGroup()
   const { token } = useAuth()
 
+  console.log('Current groupe:', currentGroup)
+
   useEffect(() => {
     fetchGroups(token || '').then((groups) => {
       if (groups && groups.length > 0) {
-        setCurrentGroup(groups[groups.length - 1].id)
+        setCurrentGroup(groups[groups.length - 1])
       }
     })
   }, [token, setCurrentGroup])
@@ -48,7 +48,11 @@ export function AppContent() {
         {currentGroup && (
           <Layout>
             <Header>
-              <UserCard user={user} />
+              <GroupeCard
+                key={currentGroup.id}
+                users={currentGroup.users}
+                groupName={currentGroup.name}
+              />
             </Header>
             <Content style={contentStyle}>
               <ContentMessage />
