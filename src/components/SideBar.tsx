@@ -147,8 +147,6 @@ function SideBarContent({ setOpen, open }: Props) {
 
   const [groups, setGroups] = useState<Array<any>>([])
 
-  console.log(groups)
-
   useEffect(() => {
     if (open) return
     fetchGroups(token || '')
@@ -159,6 +157,10 @@ function SideBarContent({ setOpen, open }: Props) {
         console.error('Error fetching groups:', error)
       })
   }, [open, token])
+
+  if (!groups || groups.length === 0 || !currentGroup) {
+    return <></>
+  }
 
   return (
     <>
