@@ -26,7 +26,7 @@ const sectionMessageStyle: React.CSSProperties = {
 
 export default function ContentMessage() {
   const { user, token } = useAuth()
-  const { currentGroup, setCurrentGroup } = useGroup()
+  const { currentGroup } = useGroup()
 
   const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState('')
@@ -44,10 +44,12 @@ export default function ContentMessage() {
   }, [currentGroup, token])
 
   usePusher({
-    channelName: currentGroup ? `group.${currentGroup}` : null,
-    eventName: 'MessageSent',
+    channelName: `group.${currentGroup}`,
+    eventName: 'message.sent',
     callback: (data) => {
-      setMessages((prevMessages) => [...prevMessages, data.message])
+      if (data && data.message) {
+        setMessages((prevMessages) => [...prevMessages, data.message])
+      }
     },
   })
 
@@ -62,6 +64,11 @@ export default function ContentMessage() {
         console.error('Error sending message:', error)
       })
   }
+
+  useEffect(() => {
+    console.log('m', messages)
+    console.log('u', user)
+  }, [messages, user])
 
   return (
     <>
