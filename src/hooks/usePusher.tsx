@@ -16,7 +16,7 @@ const usePusher = ({ channelName, eventName, callback }: UsePusherProps) => {
       wsPort: import.meta.env.VITE_PUSHER_PORT,
       forceTLS: false,
       enabledTransports: ['ws', 'wss'],
-      cluster: 'mt1',
+      cluster: 'eu',
     })
 
     const channel = pusher.subscribe(channelName)
