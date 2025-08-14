@@ -7,6 +7,7 @@ import {
 import { Button, Drawer, Flex, Form, Input, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useGroup } from '../context/GroupContext'
 import { emailOrPhoneRule } from '../rules'
 import { createGroup, fetchGroups } from '../services/GroupService'
 import UserCard from './UserCard'
@@ -19,6 +20,7 @@ const drawerBodyStyle: React.CSSProperties = {
 
 export default function SideBar() {
   const { logout, token } = useAuth()
+
   const [form] = Form.useForm()
   const contacts = Form.useWatch('users', form) || []
 
@@ -141,8 +143,11 @@ interface Props {
 
 function SideBarContent({ setOpen, open }: Props) {
   const { token } = useAuth()
+  const { setCurrentGroup } = useGroup()
 
   const [groups, setGroups] = useState<Array<any>>([])
+
+  console.log(groups)
 
   useEffect(() => {
     if (open) return
@@ -181,7 +186,9 @@ function SideBarContent({ setOpen, open }: Props) {
         style={{ width: '100%', flex: 1, overflowY: 'scroll' }}
       >
         {[...groups].reverse().map((user) => (
-          <UserCard key={user.id} user={user} />
+          <div onClick={() => setCurrentGroup(user.id)}>
+            <UserCard key={user.id} user={user} />
+          </div>
         ))}
       </Space>
     </>

@@ -1,8 +1,15 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from 'react'
 
 interface GroupContextType {
   currentGroup: number | null
-  setCurrentGroup: (id: number) => void
+  setCurrentGroup: Dispatch<SetStateAction<number | null>>
 }
 
 const GroupContext = createContext<GroupContextType | undefined>(undefined)

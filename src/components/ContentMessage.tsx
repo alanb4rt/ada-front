@@ -1,9 +1,13 @@
-import { Button, Flex, Input } from 'antd'
+import { Flex, Input } from 'antd'
 import { useEffect, useState } from 'react'
-import io from 'socket.io-client'
+import { useAuth } from '../context/AuthContext'
+import { useGroup } from '../context/GroupContext'
+import usePusher from '../hooks/usePusher'
+import {
+  fetchMessages as fetchMessagesAPI,
+  postMessage as postMessageAPI,
+} from '../services/MessageService'
 import MessageCard from './MessageCard'
-
-const socket = io('http://localhost:3000')
 
 const inputStyle: React.CSSProperties = {
   borderRadius: 8,
@@ -21,69 +25,69 @@ const sectionMessageStyle: React.CSSProperties = {
 }
 
 export default function ContentMessage() {
-  const [room, setRoom] = useState('')
+  const { user, token } = useAuth()
+  const { currentGroup, setCurrentGroup } = useGroup()
+
+  const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState('')
-  const [messageList, setMessageList] = useState([])
 
-  const joinRoom = () => {
-    if (room !== '') {
-      socket.emit('join_room', room)
-    }
-  }
+  useEffect(() => {
+    if (!token || !currentGroup) return
 
-  const sendMessage = async () => {
-    if (currentMessage !== '') {
-      const messageData = {
-        room,
-        author: socket.id,
-        message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ':' +
-          new Date(Date.now()).getMinutes(),
-      }
+    fetchMessagesAPI(token, currentGroup)
+      .then((data) => {
+        setMessages(data)
+      })
+      .catch((error) => {
+        console.error('Error fetching messages:', error)
+      })
+  }, [currentGroup, token])
 
-      socket.emit('send_message', messageData)
-      setMessageList((list) => [...list, messageData])
-      setCurrentMessage('')
-    }
+  usePusher({
+    channelName: currentGroup ? `group.${currentGroup}` : null,
+    eventName: 'MessageSent',
+    callback: (data) => {
+      setMessages((prevMessages) => [...prevMessages, data.message])
+    },
+  })
+
+  const handleSendMessage = async () => {
+    if (!token || !currentGroup || !currentMessage.trim()) return
+
+    postMessageAPI(token, currentGroup, currentMessage)
+      .then(() => {
+        setCurrentMessage('')
+      })
+      .catch((error) => {
+        console.error('Error sending message:', error)
+      })
   }
 
   useEffect(() => {
-    socket.on('receive_message', (data) => {
-      setMessageList((list) => [...list, data])
-    })
-
-    return () => socket.off('receive_message')
-  }, [])
+    console.log(messages)
+  }, [messages])
 
   return (
     <>
       <Flex style={sectionMessageStyle} gap={8}>
-        {messageList.map((messageContent, index) => (
-          <MessageCard
-            key={index}
-            content={messageContent.message}
-            messageOut={messageContent.author === socket.id}
-          />
-        ))}
+        {Array.isArray(messages) &&
+          messages.map((messageContent, index) => (
+            <MessageCard
+              key={index}
+              content={messageContent.content}
+              messageOut={messageContent.user_id === user.id}
+            />
+          ))}
       </Flex>
       <Flex style={{ padding: 16 }}>
-        <Input
-          placeholder="Enter your room"
-          variant="filled"
-          style={inputStyle}
-          onChange={(e) => setRoom(e.target.value)}
-        />
-        <Button onClick={joinRoom}>Send</Button>
         <Input
           placeholder="Enter your message"
           variant="filled"
           style={inputStyle}
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
+          onPressEnter={handleSendMessage}
         />
-        <Button onClick={sendMessage}>Send</Button>
       </Flex>
     </>
   )
