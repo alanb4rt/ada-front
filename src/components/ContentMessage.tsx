@@ -59,6 +59,10 @@ export default function ContentMessage() {
     },
   })
 
+  if (!user || !currentGroup) {
+    return <></>
+  }
+
   const handleSendMessage = async () => {
     if (!token || !currentGroup || !currentMessage.trim()) return
 
@@ -67,7 +71,7 @@ export default function ContentMessage() {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
-            id: Date.now().toString(),
+            id: Date.now(),
             content: currentMessage,
             sender_id: user.id,
             group_id: currentGroup.id,
@@ -95,7 +99,7 @@ export default function ContentMessage() {
               <MessageCard
                 key={index}
                 content={message.content}
-                messageOut={message.sender_id === user.id}
+                messageOut={Number(message.sender_id) === user?.id}
                 createdAt={message.created_at}
               />
             ))}

@@ -1,7 +1,7 @@
 import type { User } from './User'
 
 interface Group {
-  id: string
+  id: number
   name: string
   users: User[]
 }
